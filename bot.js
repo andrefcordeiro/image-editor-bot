@@ -125,11 +125,7 @@ async function postReplyWithImages(mediaIds, idOfTweet, usernameOfTweet) {
 }
 
 //função que cria e posta o reply
-async function reply(Images, idOfTweet, usernameOfTweet, textOfTweet) {
-
-    let array = textOfTweet.split(" ")
-    let tipoDeEdicao = array[1] //pegando o tipo de edição do texto do tweet
-    // console.log("tipo de edição: " + tipo)
+async function reply(Images, idOfTweet, usernameOfTweet, tipoDeEdicao) {
 
     let urlImage;
     let cont = 0;
@@ -217,32 +213,34 @@ async function searchTweets() {
     let tiposDeEdicao = ["negative", "sepia", "oilpaint", "cyberpunk", "charcoal", "mosaic", "noise"]
     await deleteFiles()
 
-    let params = { q: "#ImageEditorBot", result_type: "mixed", count: 1, include_entities: true, exclude: "retweets" }
+    let params = { q: "#ImageEditorBot", result_type: "mixed", count: 5, include_entities: true, exclude: "retweets" }
 
     await user.get("search/tweets", params, async (err, data, response) => {
 
         try {
             let tweets = data.statuses
 
-
             if (typeof tweets !== 'undefined' && tweets.length > 0) { //verifica a requisição
-
 
                 for (let tweet of tweets) {
 
-                    let array = tweet.text.split(" ")
-                    let tipoDeEdicao = array[1] //pegando o tipo de edição do texto do tweet
+                    let texto = tweet.text.split(" ")
+                    console.log(texto)
 
-                    if (tiposDeEdicao.includes(tipoDeEdicao) && tweet.text.split(" ").length >= 2) { // verifica se os parametros do tweet foram passados corretamente
+                    if (tweet.text.split(" ").length >= 2) { // verifica se os parametros do tweet foram passados corretamente
 
                         if (tweet.entities.media) { //verifica se há mídia no tweet
+                            let tipoDeEdicao = texto[1] //pegando o tipo de edição do texto do tweet
 
-                            let shouldReply = await getLastTweets("imageeditorbot", tweet.id_str)
+                            if (tiposDeEdicao.includes(tipoDeEdicao)) { //verifica se o tipo de edição é valido
 
-                            if (shouldReply === true) {
-                                console.log("\nTweet: '" + tweet.text + "' Tweet id: " + tweet.id_str + "\n")
-                                await reply(tweet.extended_entities.media, tweet.id_str, tweet.user.screen_name, tweet.text)
-                                break
+                                let shouldReply = await getLastTweets("imageeditorbot", tweet.id_str)
+
+                                if (shouldReply === true) {
+                                    console.log("\nTweet: '" + tweet.text + "' Tweet id: " + tweet.id_str + "\n")
+                                    await reply(tweet.extended_entities.media, tweet.id_str, tweet.user.screen_name, tipoDeEdicao)
+                                    break
+                                }
                             }
                         }
 
@@ -252,20 +250,24 @@ async function searchTweets() {
 
                             if (tweet.text.split(" ").length >= 2) { // verifica se os parametros do tweet foram passados corretamente
 
-                                let shouldReply = await getLastTweets("imageeditorbot", tweet.id_str)
+                                let tipoDeEdicao = texto[2] //pegando o tipo de edição do texto do tweet
+                                if (tiposDeEdicao.includes(tipoDeEdicao)) { //verifica se o tipo de edição é valido
 
-                                if (shouldReply === true) {
+                                    let shouldReply = await getLastTweets("imageeditorbot", tweet.id_str)
 
-                                    let images = await hasImage(tweet.in_reply_to_status_id_str)
+                                    if (shouldReply === true) {
 
-                                    if (images !== null) {
-                                        await reply(images, tweet.id_str, tweet.user.screen_name, tweet.text)
-                                        break
+                                        let images = await hasImage(tweet.in_reply_to_status_id_str)
+
+                                        if (images !== null) {
+                                            await reply(images, tweet.id_str, tweet.user.screen_name, tipoDeEdicao)
+                                            break
+                                        }
+                                        else {
+                                            console.log("Não há imagem no tweet original")
+                                        }
+
                                     }
-                                    else {
-                                        console.log("Não há imagem no tweet original")
-                                    }
-
                                 }
                             }
                         }
@@ -287,5 +289,6 @@ async function searchTweets() {
 
 }
 
-setInterval(searchTweets, 60000)
+// setInterval(searchTweets, 60000)
+searchTweets()
 
