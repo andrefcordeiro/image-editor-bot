@@ -287,5 +287,5 @@ async function searchTweets() {
 
 }
 
-searchTweets()
+setInterval(searchTweets(), 60000)
 
