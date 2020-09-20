@@ -288,6 +288,6 @@ async function searchTweets() {
 
 }
 
-// setInterval(searchTweets, 60000)
-searchTweets()
+setInterval(searchTweets, 60000)
+// searchTweets()
 
