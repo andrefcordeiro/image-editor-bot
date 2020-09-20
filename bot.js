@@ -228,14 +228,13 @@ async function searchTweets() {
                     console.log(texto)
 
                     if (tweet.text.split(" ").length >= 2) { // verifica se os parametros do tweet foram passados corretamente
+                        let tipoDeEdicao = texto[texto.length - 2] //pegando o tipo de edição do texto do tweet
 
                         if (tweet.entities.media) { //verifica se há mídia no tweet
-                            let tipoDeEdicao = texto[1] //pegando o tipo de edição do texto do tweet
 
-                            if (tiposDeEdicao.includes(tipoDeEdicao)) { //verifica se o tipo de edição é valido
+                            if (tiposDeEdicao.includes(tipoDeEdicao)) {
 
                                 let shouldReply = await getLastTweets("imageeditorbot", tweet.id_str)
-
                                 if (shouldReply === true) {
                                     console.log("\nTweet: '" + tweet.text + "' Tweet id: " + tweet.id_str + "\n")
                                     await reply(tweet.extended_entities.media, tweet.id_str, tweet.user.screen_name, tipoDeEdicao)
@@ -250,8 +249,8 @@ async function searchTweets() {
 
                             if (tweet.text.split(" ").length >= 2) { // verifica se os parametros do tweet foram passados corretamente
 
-                                let tipoDeEdicao = texto[2] //pegando o tipo de edição do texto do tweet
-                                if (tiposDeEdicao.includes(tipoDeEdicao)) { //verifica se o tipo de edição é valido
+                                let tipoDeEdicao = texto[texto.length - 1] //pegando o tipo de edição do texto do tweet
+                                if (tiposDeEdicao.includes(tipoDeEdicao)) {
 
                                     let shouldReply = await getLastTweets("imageeditorbot", tweet.id_str)
 
@@ -289,6 +288,6 @@ async function searchTweets() {
 
 }
 
-setInterval(searchTweets, 60000)
-// searchTweets()
+// setInterval(searchTweets, 60000)
+searchTweets()
 
