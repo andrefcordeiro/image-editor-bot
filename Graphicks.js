@@ -20,7 +20,7 @@ async function resizeImage(pathInput, pathOutput, width, height, callback) {
             if (err) console.log(err)
             else {
 
-                callback(pathOutput.substring(2), height / 2)
+                callback(pathOutput.substring(2), height / 1.7)
             }
         })
 }
