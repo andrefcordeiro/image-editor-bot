@@ -15,12 +15,12 @@ async function deletaArquivo(path) {
 async function resizeImage(pathInput, pathOutput, width, height, callback) {
 
     await gm(pathInput)
-        .resize(width, height)
+        .resize(width, height * 0.3)
         .write(pathOutput, (err) => {
             if (err) console.log(err)
             else {
 
-                callback(pathOutput.substring(2), height / 1.7)
+                callback(pathOutput.substring(2), height - (height * 0.3))
             }
         })
 }
