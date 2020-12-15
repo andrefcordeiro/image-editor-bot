@@ -6,12 +6,10 @@ A nodejs twitter bot created to edit images and to reply whenever it's called by
 ### Cloning project
 ```
 git clone https://github.com/andrefcordeiro/image-editor-bot.git
-
 ```
 ### Initializing project
 ```
 yarn init -y
-
 ```     
 ### Installing dependencies
 ```
@@ -20,7 +18,6 @@ yarn add twit
 yarn add request
         
 yarn add gm 
-
 ```
 
 ### Download and install GraphicsMagick
