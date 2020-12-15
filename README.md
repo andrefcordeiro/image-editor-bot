@@ -8,20 +8,22 @@ A nodejs twitter bot created to edit images and to reply whenever it's called by
 git clone https://github.com/andrefcordeiro/image-editor-bot.git
 
 ```
-### initialize project
+### Initializing project
 ```
 yarn init -y
+
 ```     
-### Dependencies
+### Installing dependencies
 ```
 yarn add twit
         
 yarn add request
         
 yarn add gm 
+
 ```
 
-### Download and installation of GraphicsMagick
-#### Windows: http://www.graphicsmagick.org
+### Download and install GraphicsMagick
+Windows: http://www.graphicsmagick.org
 
-#### More info about the package: https://www.npmjs.com/package/gm
+More info about the package: https://www.npmjs.com/package/gm
