@@ -10,8 +10,7 @@ git clone https://github.com/andrefcordeiro/image-editor-bot.git
 
 ### Installing dependencies
 ```
-npm install
-        
+npm install     
 ```
 ### Starting the app
 ```
